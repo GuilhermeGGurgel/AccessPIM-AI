@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <header class="dash-header">
+    <h2>AccessPIM AI — Painel de Monitoramento Industrial</h2>
+    <span class="location-tag">Polo Industrial de Manaus (PIM)</span>
+  </header>
+  
+  <div class="content-layout">
+    <div class="camera-box" [ngClass]="statusAcesso">
+      <video #video autoplay muted width="100%" height="100%"></video>
+      
+      <div class="face-overlay" *ngIf="statusAcesso === 'processando' || statusAcesso === 'aguardando'">
+        <div class="bounding-box" [ngClass]="{'scanning': statusAcesso === 'processando'}"></div>
+        <span class="scan-text">{{ statusAcesso === 'processando' ? 'Processando na Borda...' : 'Aguardando Aproximação' }}</span>
+      </div>
+    </div>
+
+    <div class="status-panel">
+      <h3>Status do Dispositivo (Edge)</h3>
+      <div class="badge" [ngClass]="statusAcesso">
+        {{ statusTexto }}
+      </div>
+      
+      <div class="logs-rapidos">
+        <h4>Última Detecção da Borda (Python):</h4>
+        <p><strong>Usuário:</strong> {{ usuarioDetectado }}</p>
+        <p><strong>Área:</strong> Sala de Servidores</p>
+        <p><strong>Horário:</strong> {{ horarioAcesso }}</p>
+      </div>
+
+      <div class="control-actions">
+        <button (click)="simularEventoBorda(true)" class="btn-success">Simular Autorizado</button>
+        <button (click)="simularEventoBorda(false)" class="btn-danger">Simular Violação</button>
+      </div>
+    </div>
+  </div>
+</div>
